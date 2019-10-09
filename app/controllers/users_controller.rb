@@ -6,11 +6,10 @@ class UsersController < ApplicationController
 
   def show
     user = User.find(params[:id])
-    # options = {
-    #   include: [:user]
-    # }
-    # render json: UserSerializer.new(user, options)
-    render json: UserSerializer.new(user)
+    options = {
+      include: [:images]
+    }
+    render json: UserSerializer.new(user, options)
   end
 
   # def create

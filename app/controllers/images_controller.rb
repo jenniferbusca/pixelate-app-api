@@ -6,10 +6,10 @@ class ImagesController < ApplicationController
 
   def show
     image = Image.find(params[:id])
-    # options = {
-    #   include: [:fimage]
-    # }
-    render json: ImageSerializer.new(image)
+    options = {
+      include: [:user]
+    }
+    render json: ImageSerializer.new(image, options)
   end
 
   def create
