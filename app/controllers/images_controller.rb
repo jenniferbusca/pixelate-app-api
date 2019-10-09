@@ -13,14 +13,14 @@ class ImagesController < ApplicationController
   end
 
   def create
-    image = Image.create(image_params)
+    image = Image.create(user_id: params[:image][:id], image_url: params[:image][:imageURL])
     render json: image
   end
 
-  private
-
-  def image_params
-    params.require(:image).permit(:user, :title, :image, :bytes)
-  end
+  # private
+  #
+  # def image_params
+  #   params.require(:image).permit(:user, :image)
+  # end
 
 end
