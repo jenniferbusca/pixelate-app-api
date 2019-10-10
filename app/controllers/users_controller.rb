@@ -17,18 +17,13 @@ class UsersController < ApplicationController
   #   render json: user
   # end
   def create
-   @user = User.new(user_params)
+   @user = User.new(email: params[:email], password: params[:password])
      if @user.save
-        render json: { result: true, msg: ' The image has sucessfully uploaded!'}, status: :created
+        render json: { result: true, msg: 'User sucessfully created!'}, status: :created
      else
         render json: {result: false, user: @user.errors }, status: :unprocessable_entity
      end
   end
 
-  private
-
-  def user_params
-    params.require(:user).permit(:email, :password, :image)
-  end
 
 end
