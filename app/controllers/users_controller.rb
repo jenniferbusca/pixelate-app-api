@@ -12,17 +12,15 @@ class UsersController < ApplicationController
     render json: UserSerializer.new(user, options)
   end
 
-  # def create
-  #   user = User.create(user_params)
-  #   render json: user
-  # end
   def create
-   @user = User.new(email: params[:email], password: params[:password])
-     if @user.save
-        render json: { result: true, msg: 'User sucessfully created!'}, status: :created
-     else
-        render json: {result: false, user: @user.errors }, status: :unprocessable_entity
-     end
+   user = User.find_or_create_by(email: params[:user][:email], password: params[:user][:password])
+   user.save
+   render json: user
+     # if @user.save
+     #    render json: { result: true, msg: 'User sucessfully created!'}, status: :created
+     # else
+     #    render json: {result: false, user: @user.errors }, status: :unprocessable_entity
+     # end
   end
 
 
