@@ -1,4 +1,5 @@
 class User < ApplicationRecord
   has_many :images, -> { order('created_at DESC')}
-  # mount_uploader :image, ImageUploader
+  validates :email, :password, presence: true
+  # validates :email, uniqueness: { case_sensitive: false }
 end

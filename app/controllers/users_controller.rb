@@ -14,13 +14,11 @@ class UsersController < ApplicationController
 
   def create
    user = User.find_or_create_by(email: params[:user][:email], password: params[:user][:password])
-   user.save
-   render json: user
-     # if @user.save
-     #    render json: { result: true, msg: 'User sucessfully created!'}, status: :created
-     # else
-     #    render json: {result: false, user: @user.errors }, status: :unprocessable_entity
-     # end
+   if user.save
+    render json: user
+   else
+    render json: {result: false, user: user.errors }, status: :unprocessable_entity
+   end
   end
 
 
