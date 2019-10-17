@@ -15,7 +15,9 @@ class ImagesController < ApplicationController
   end
 
   def create
-    image = Image.create(user_id: params[:image][:user_id], image_url: params[:image][:image_url])
+    image_info = params[:image]
+    image = Image.create(user_id: image_info[:user_id], image_url: image_info[:image_url], transformations: image_info[:transformations])
+    # render json: ImageSerializer.new(image)
     render json: image
   end
 
@@ -23,16 +25,16 @@ class ImagesController < ApplicationController
   end
 
   def update
-   if @image.update(user_id: params[:image][:user_id], image_url: params[:image][:image_url])
-     render json: image
-   else
-     render :edit
-   end
+   @image.update(user_id: @image.user_id, image_url: params[:image][:image_url], transformations: params[:transformation])
+     options = {
+       include: [:user]
+     }
+    render json: ImageSerializer.new(@image, options)
   end
 
   def destroy
    @image.destroy
-   redirect_to itineraries_path(current_user)
+   render json: @image
   end
 
   private
